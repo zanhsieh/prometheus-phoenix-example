@@ -18,6 +18,12 @@ config :hello_phoenix, HelloPhoenix.Endpoint,
   pubsub: [name: HelloPhoenix.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :prometheus, PlugsInstrumenter,
+  labels: [:status_class, :method, :host, :schemei],
+  duration_buckets: [10, 100, 1_000, 10_000, 100_000,
+                     300_000, 500_000, 750_000, 1_000_000],
+  registry: :default
+
 config :prometheus, PhoenixInstrumenter,
   labels: [:controller, :action],
   duration_buckets: [10, 100, 1_000, 10_000, 100_000, 300_000]

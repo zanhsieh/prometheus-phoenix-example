@@ -18,8 +18,9 @@ defmodule HelloPhoenix.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {HelloPhoenix, []},
-     applications: [:prometheus_phoenix, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+     applications: [:prometheus_phoenix, :plug, :prometheus, :phoenix, 
+                    :phoenix_pubsub, :phoenix_html, :cowboy, :logger, 
+                    :gettext, :phoenix_ecto, :postgrex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,7 +31,8 @@ defmodule HelloPhoenix.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:prometheus_phoenix, "~> 0.0.5"},
+    [{:prometheus_plugs, "~> 0.9"},
+     {:prometheus_phoenix, "~> 0.0.5"},
      {:phoenix, "~> 1.2.1"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},

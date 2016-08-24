@@ -6,6 +6,8 @@ defmodule HelloPhoenix do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    Prometheus.PlugsInstrumenter.setup()
+    Prometheus.PlugsExporter.setup()
     Prometheus.PhoenixInstrumenter.setup()
     # Define workers and child supervisors to be supervised
     children = [
@@ -15,6 +17,7 @@ defmodule HelloPhoenix do
       supervisor(HelloPhoenix.Endpoint, []),
       # Start your own worker by calling: HelloPhoenix.Worker.start_link(arg1, arg2, arg3)
       # worker(HelloPhoenix.Worker, [arg1, arg2, arg3]),
+      Plug.Adapters.Cowboy.child_spec(:http, Stack, [], [port: 4001])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -30,4 +33,12 @@ defmodule HelloPhoenix do
     HelloPhoenix.Endpoint.config_change(changed, removed)
     :ok
   end
+end
+
+defmodule Stack do
+  use Plug.Builder
+
+  plug Prometheus.PlugsInstrumenter
+  plug Prometheus.PlugsExporter
+  plug Prometheus.PhoenixInstrumenter
 end
