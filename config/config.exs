@@ -11,6 +11,7 @@ config :hello_phoenix,
 
 # Configures the endpoint
 config :hello_phoenix, HelloPhoenix.Endpoint,
+  instrumenters: [Prometheus.PhoenixInstrumenter],
   url: [host: "localhost"],
   secret_key_base: "AuebEikhkmOJKdljRPfeQzPxi+4WUKCRk9XtcsX/2KRGAvJ8G+D0iU7ARZ2FXlr5",
   render_errors: [view: HelloPhoenix.ErrorView, accepts: ~w(html json)],
